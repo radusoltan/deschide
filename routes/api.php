@@ -22,6 +22,6 @@ Route::get('check-auth',[\App\Http\Controllers\Auth\LoginController::class,'chec
 
 Route::post('logout',[\App\Http\Controllers\Auth\LoginController::class,'logout']);
 
-Route::group(['prefix'=>'user'], function (){
+Route::group(['prefix'=>'user','middleware'=>["auth:api"]], function (){
     Route::get('',[\App\Http\Controllers\UsersController::class,'index']);
 });

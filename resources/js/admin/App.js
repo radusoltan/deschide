@@ -14,7 +14,6 @@ import Footer from './components/partials/Footer'
 import AuthenticatedRoute from "./AuthenticatedRoute"
 
 class App extends Component {
-
     render() {
         return <Provider store={store}>
         <BrowserRouter>

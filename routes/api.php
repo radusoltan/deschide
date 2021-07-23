@@ -13,12 +13,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('login',[App\Http\Controllers\Auth\LoginController::class,'login'])->name('login');
+Route::post('login',[\Laravel\Passport\Http\Controllers\AccessTokenController::class,'issueToken'])
+    ->middleware(['api-login','throttle'])
+    ->name('login');
+//Route::post('login',[App\Http\Controllers\Auth\LoginController::class,'login'])->name('login');
 
 Route::get('check-auth',[\App\Http\Controllers\Auth\LoginController::class,'checkAuth']);
 
 Route::post('logout',[\App\Http\Controllers\Auth\LoginController::class,'logout']);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix'=>'user'], function (){
+    Route::get('',[\App\Http\Controllers\UsersController::class,'index']);
 });

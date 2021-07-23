@@ -23,12 +23,12 @@ i18n
     .use(HttpApi)
     .init({
         resources,
-        lng: 'ro',
+        // lng: 'ro',
         supportedLngs: ['ro','gb','ru'],
         fallbackLng: 'ro',
         detection: {
-            order: ['localStorage','htmlTag', 'cookie', 'sessionStorage', 'path', 'subdomain'],
-            caches: []
+            order: ['cookie','localStorage','htmlTag', 'sessionStorage', 'path', 'subdomain'],
+            caches: ['cookie','localStorage']
         },
         interpolation: {
             escapeValue: false // react already safes from xss

@@ -4,6 +4,7 @@ import Auth from "../../../../api/Auth"
 class Index extends Component {
     constructor(props) {
         super(props)
+
         this.handleLogout = this.handleLogout.bind(this)
     }
 
@@ -11,11 +12,11 @@ class Index extends Component {
         e.preventDefault()
         Auth.logout()
             .then(r=> {
-                localStorage.clear()
+                cookies.remove('access_token',{path:'/'})
                 this.props.history.push('/login')
             })
             .catch(e=>{
-                localStorage.clear()
+                cookies.remove('access_token',{path:'/'})
                 if(!e.response.data.state){
                     this.props.history.push('/login')
                 }

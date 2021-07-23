@@ -1,3 +1,5 @@
+import Cookies from "universal-cookie/lib";
+
 require('./bootstrap')
 require('./admin/App')
 import i18next from "i18next"
@@ -9,8 +11,11 @@ import "./modules/moment"
 import "./modules/sidebar"
 import "./modules/flatpickr"
 import "./modules/vector-maps"
-i18next.changeLanguage(localStorage.getItem('lang')||'ro')
+
+const cookies = new Cookies()
+i18next.changeLanguage(cookies.get('i18next'))
 i18next.on('languageChanged',(lng)=>{
-    localStorage.setItem('lang',lng)
-    window.location.reload()
+    // localStorage.setItem('lang',lng)
+    //
+    // window.location.reload()
 })

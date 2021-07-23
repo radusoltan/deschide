@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class ApiLogin
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle(Request $request, Closure $next)
+    {
+        $secret = DB::table('oauth_clients')
+            ->where('id',3)
+            ->pluck('secret')
+            ->first();
+        $request->merge([
+            'grant_type' => 'password',
+            'client_id' => 3,
+            'client_secret' => $secret
+        ]);
+        return $next($request);
+    }
+}

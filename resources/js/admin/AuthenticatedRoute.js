@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
-import { Redirect, withRouter } from'react-router'
+import { Route, Redirect, withRouter} from 'react-router-dom'
 
-const AuthenticatedRoute = ({component: Component, ...rest}) => (
-    <Route {...rest} render={props => localStorage.getItem("token")? (
+const AuthenticatedRoute = ({component: Component, ...rest}) =>(
+    <Route {...rest} render={props => cookies.get('access_token')? (
         <Component {...props}/>
     ):(
-        <Redirect to={{pathname: "/login", state: {from: props.location}}}/>
+        <Redirect to={{pathname: "/login", state: {from: props.location}}} {...props}/>
     )
     } />
 );

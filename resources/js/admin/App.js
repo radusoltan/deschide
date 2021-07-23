@@ -20,7 +20,7 @@ class App extends Component {
         <BrowserRouter>
             <Switch>
                 <Fragment>
-                <Route exact path={'/login'} component={Login} />
+                <Route exact path={'/login'} component={()=><Login/>} />
                 <div className="wrapper">
                     <Sidebar />
                     <div className="main">

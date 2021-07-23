@@ -3,40 +3,63 @@ import {render} from "react-dom"
 import './bootstrap'
 import {withRouter} from 'react-router-dom'
 import Auth from "./api/Auth"
+import Swal from 'sweetalert2'
 
 class Login extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            email:'',
+            username:'',
             password:'',
+            isChecked: false,
             error_message: null,
             errors: null
         }
-
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handlePassword = this.handlePassword.bind(this)
         this.handleEmail = this.handleEmail.bind(this)
         this.handleLangChange = this.handleLangChange.bind(this)
+        this.handleChecked = this.handleChecked.bind(this)
     }
     componentDidMount() {
-        if(localStorage.getItem('token')){
+        if(document.getElementsByClassName('wrapper').length > 0){
+            document.getElementsByClassName('wrapper').forEach(e=>e.style.display='none')
+        }
+        if(cookies.get('access_token')){
             window.location.replace('/admin')
         }
     }
 
     handleSubmit(e){
         e.preventDefault()
+
         Auth.login({
-            email: this.state.email,
+            username: this.state.username,
             password: this.state.password,
-            lang: 'ro'
-        }).then(r=> {
-            localStorage.setItem('token',r.data.token)
-            setTimeout(()=>{
-                window.location.replace('/admin')
-            },500)
+        })
+        .then(r=> {
+            if(!this.state.isChecked){
+                const options = {
+                    path: '/'
+                }
+                cookies.set('access_token',r.data.access_token,options)
+            }
+            let date = new Date()
+            date.setTime(date.getTime() + (r.data.expires_in))
+            const options = {
+                path: '/',
+                expires: date
+            }
+            cookies.set('access_token',r.data.access_token, options)
+            window.location.replace('/admin')
+        })
+        .catch(e=> {
+            Swal.fire({
+                title: e.response.data.error,
+                text: e.response.data.message,
+                icon: 'error'
+            })
         })
     }
     handlePassword(e){
@@ -46,14 +69,16 @@ class Login extends Component {
     }
     handleEmail(e){
         this.setState({
-            email: e.target.value
+            username: e.target.value
         })
     }
     handleLangChange(e){
         this.setState({
             lang: e.target.value
         })
-        localStorage.setItem('lang',e.target.value)
+    }
+    handleChecked(){
+        this.setState({isChecked:!this.state.isChecked})
     }
     render() {
         return <main className="d-flex w-100">
@@ -67,7 +92,6 @@ class Login extends Component {
                                     Sign in to your account to continue
                                 </p>
                             </div>
-
                             <div className="card">
                                 <div className="card-body">
                                     <div className="m-sm-4">
@@ -85,7 +109,7 @@ class Login extends Component {
                                                        name="email"
                                                        placeholder="Enter your email"
                                                        onChange={this.handleEmail}
-                                                       value={this.state.email}
+                                                       value={this.state.username}
                                                 />
 
                                             </div>
@@ -106,6 +130,18 @@ class Login extends Component {
                                                     <option value="ru">Russian</option>
                                                     <option value="gb">English</option>
                                                 </select>
+                                            </div>
+                                            <div>
+                                                <label className="form-check">
+                                                    <input
+                                                        id="remember"
+                                                        type="checkbox"
+                                                        className="form-check-input"
+                                                        name="remember"
+                                                        onChange={this.handleChecked}
+                                                    />
+                                                    <span className="form-check-label">Remember</span>
+                                                </label>
                                             </div>
                                             <div className="text-center mt-3">
                                                 <button type="submit" className="btn btn-lg btn-primary">Sign in</button>

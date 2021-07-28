@@ -25,3 +25,6 @@ Route::post('logout',[\App\Http\Controllers\Auth\LoginController::class,'logout'
 Route::group(['prefix'=>'user','middleware'=>["auth:api"]], function (){
     Route::get('',[\App\Http\Controllers\UsersController::class,'index']);
 });
+Route::group(['prefix'=>'role','middleware'=>["auth:api"]], function (){
+  Route::get('',[\App\Http\Controllers\RoleController::class,'index']);
+});

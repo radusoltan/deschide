@@ -1,3 +1,11 @@
 {
-  "salut": "Salut"
+  "salut": "Salut",
+  "menu": {
+    "management": {
+      "head": "Management",
+      "users": "Utilizatori",
+      "roles": "Roluri",
+      "permissions": "Permisiuni"
+    }
+  }
 }

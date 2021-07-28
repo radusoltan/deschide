@@ -1,3 +1,11 @@
 {
-  "salut": "Privet"
+  "salut": "Privet",
+  "menu": {
+    "management": {
+      "head": "Управление",
+      "users": "Пользователи",
+      "roles": "Роли",
+      "permissions": "Разрешения"
+    }
+  }
 }

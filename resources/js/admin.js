@@ -15,7 +15,5 @@ import "./modules/vector-maps"
 const cookies = new Cookies()
 i18next.changeLanguage(cookies.get('i18next'))
 i18next.on('languageChanged',(lng)=>{
-    // localStorage.setItem('lang',lng)
-    //
-    // window.location.reload()
+    window.location.reload()
 })

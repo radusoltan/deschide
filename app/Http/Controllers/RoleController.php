@@ -11,12 +11,15 @@ class RoleController extends Controller
       return Role::orderBy('id','DESC')->paginate();
     }
 
-    
+    public function show(Role $role){
+      return $role;
+    }
+
     public function store(Request $request)
     {
-      
+
     }
-    
+
     public function update(Request $request,Role $role)
     {
 

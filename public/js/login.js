@@ -5051,23 +5051,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+var headers = {
+  headers: {
+    Authorization: 'Bearer ' + cookies.get('access_token')
+  }
+};
 var Auth = {
   login: function login(data) {
     return axios.post('login', data);
   },
   checkAuth: function checkAuth() {
-    return axios.get('check-auth', {
-      headers: {
-        Authorization: 'Bearer ' + cookies.get('access_token')
-      }
-    });
+    return axios.get('check-auth', headers);
   },
   logout: function logout() {
-    return axios.post('logout', {}, {
-      headers: {
-        Authorization: 'Bearer ' + cookies.get('access_token')
-      }
-    });
+    return axios.post('logout', {}, headers);
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Auth);

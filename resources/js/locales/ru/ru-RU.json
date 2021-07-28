@@ -6,6 +6,14 @@
       "users": "Пользователи",
       "roles": "Роли",
       "permissions": "Разрешения"
+    },
+    "content":{
+      "head": "Контент",
+      "categories": "Категории"
     }
+  },
+  "messages":{
+    "susscess":{},
+    "error": {}
   }
 }

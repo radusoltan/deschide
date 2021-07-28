@@ -1,9 +1,9 @@
-
+const headers = {headers:{Authorization:'Bearer '+ cookies.get('access_token')}}
 
 const Auth = {
     login: data=>axios.post('login',data),
-    checkAuth: ()=>axios.get('check-auth',{headers:{Authorization:'Bearer '+ cookies.get('access_token')}}),
-    logout: ()=>axios.post('logout',{},{headers:{Authorization:'Bearer '+ cookies.get('access_token')}})
+    checkAuth: ()=>axios.get('check-auth',headers),
+    logout: ()=>axios.post('logout',{},headers)
 }
 
 export default Auth

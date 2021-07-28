@@ -1,3 +1,11 @@
 {
-  "salut": "Hello"
+  "salut": "Hello",
+  "menu": {
+    "management": {
+      "head": "Management",
+      "users": "Users",
+      "roles": "Roles",
+      "permissions": "Permissions"
+    }
+  }
 }

@@ -45,20 +45,49 @@ class Index extends Component {
 
                 <ul className="sidebar-nav">
 
-                    <li className="sidebar-item">
+                    <li
+                      className={
+                        this.props.location.pathname === '/admin/management/users'
+                        || '/admin/management/roles'
+                        || '/admin/management/permissions'
+                          ?'sidebar-item active'
+                          :'sidebar-item '}
+                    >
                         <a href="#management" data-bs-toggle="collapse" className="sidebar-link collapsed">
                             <i className="align-middle" data-feather="sliders"/> <span
-                            className="align-middle">Management</span>
+                            className="align-middle">{i18next.t('menu.management.head')}</span>
                         </a>
-                        <ul id="management" className="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                            <li className="sidebar-item">
-                                <Link className="sidebar-link" to={'/admin/management/users'}>Users</Link>
+                        <ul id="management"
+                            // className="sidebar-dropdown list-unstyled collapse show"
+                            className={this.props.location.pathname === '/admin/management/users'
+                            || '/admin/management/roles'
+                            || '/admin/management/permissions'
+                              ?"sidebar-dropdown list-unstyled collapse show"
+                              :"sidebar-dropdown list-unstyled collapse"}
+                            data-bs-parent="#sidebar">
+                            <li
+                              className={
+                                this.props.location.pathname === '/admin/management/users'
+                                  ?"sidebar-item active"
+                                  :"sidebar-item"}
+                            >
+                                <Link className="sidebar-link" to={'/admin/management/users'}>{i18next.t('menu.management.users')}</Link>
                             </li>
-                            <li className="sidebar-item">
-                                <Link className="sidebar-link" to={'/admin/management/roles'}>Roles</Link>
+                            <li
+                              className={
+                                this.props.location.pathname === '/admin/management/roles'
+                                  ?"sidebar-item active"
+                                  :"sidebar-item"}
+                            >
+                                <Link className="sidebar-link" to={'/admin/management/roles'}>{i18next.t('menu.management.roles')}</Link>
                             </li>
-                            <li className="sidebar-item">
-                                <Link className="sidebar-link" to={'/admin/management/permissions'}>Permissions</Link>
+                            <li
+                              className={
+                                this.props.location.pathname === '/admin/management/permissions'
+                                  ?"sidebar-item active"
+                                  :"sidebar-item"}
+                            >
+                                <Link className="sidebar-link" to={'/admin/management/permissions'}>{i18next.t('menu.management.permissions')}</Link>
                             </li>
                         </ul>
                     </li>

@@ -12,6 +12,7 @@ import Sidebar from './components/partials/Sidebar'
 import Header from './components/partials/Header'
 import Footer from './components/partials/Footer'
 import AuthenticatedRoute from "./AuthenticatedRoute"
+import Add from './components/pages/management/users/Add'
 
 class App extends Component {
     render() {
@@ -29,6 +30,7 @@ class App extends Component {
                                 <AuthenticatedRoute exact path={'/admin'} component={Dashboard} />
                                 <AuthenticatedRoute exact path={'/admin/management/roles'} component={Roles} />
                                 <AuthenticatedRoute exact path={'/admin/management/users'} component={Users} />
+                                <AuthenticatedRoute exact path={'/admin/management/user/add'} component={Add} />
                                 <AuthenticatedRoute exact path={'/admin/management/permissions'} component={Permissions} />
                             </div>
                         </main>

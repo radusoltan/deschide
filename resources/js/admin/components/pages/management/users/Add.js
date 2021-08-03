@@ -13,6 +13,7 @@ class Add extends Component{
 		  name:'',
 			email: '',
 			password: '',
+      role:''
 		}
 
 		this.handleSubmit = this.handleSubmit.bind(this)
@@ -20,7 +21,7 @@ class Add extends Component{
 	}
 
 	componentDidMount() {
-	  this.props.getRoles(1)
+	  this.props.getRoles()
   }
 
   handleSubmit(e){
@@ -29,9 +30,11 @@ class Add extends Component{
     this.props.addUser({
       name:this.state.name,
       email:this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      role:this.state.role
     })
-
+    // redirect
+    setTimeout(() => this.props.history.push('/admin/management/users'), 2000);
 	}
 	handleInput(e){
 		this.setState({
@@ -61,9 +64,16 @@ class Add extends Component{
 										<input type="password" className="form-control" name="password" placeholder="Password" onChange={this.handleInput} value={this.state.password} />
 									</div>
                   <div className="mb-3">
-                    {
-                      console.log(this.props.roles)
-                    }
+                    <select className="form-control" onChange={this.handleInput} name="role">
+                      <option value={null}>Select</option>
+                      {/*<option value={'editor'}>Editor</option>*/}
+                      {
+                        !_.isEmpty(this.props.roles)
+                          ?this.props.roles.data.map(({id,name})=><option value={id} key={id}>{name}</option>)
+                          :null
+                      }
+                    </select>
+
                   </div>
 								</div>
 								<button type="submit" className="btn btn-primary">Submit</button>

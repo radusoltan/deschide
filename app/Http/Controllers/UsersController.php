@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -31,6 +32,8 @@ class UsersController extends Controller
           'email'=>$request->get('email'),
           'password'=>Hash::make($request->get('password'))
         ]);
+        $user->assignRole(Role::find((int)$request->get('role')));
+
         return response()->json([
           'status'=>1,
           'user'=>$user

@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Role;
 class RoleController extends Controller
 {
     public function index(){
-      return Role::pluck('name','name')->all();
+      return Role::paginate();
     }
 
     public function show(Role $role){

@@ -1,6 +1,6 @@
 import {
-  ADMIN_USERS, 
-  ADMIN_USERS_FAILURE, 
+  ADMIN_USERS,
+  ADMIN_USERS_FAILURE,
   ADMIN_USERS_SUCCESS,
   ADMIN_USER_ADD,
   ADMIN_USER_ADD_SUCCESS,
@@ -17,11 +17,11 @@ import {
 } from '../types/adminUserTypes'
 import User from "../../api/User"
 
-const getUsers = ()=> dispatch =>{
+const getUsers = (page=1) => dispatch =>{
   dispatch({
     type: ADMIN_USERS
   })
-  User.all(1)
+  User.all(page)
     .then(r=>dispatch({
       type: ADMIN_USERS_SUCCESS,
       payload: r.data
@@ -42,7 +42,7 @@ const getUser = user => dispatch => {
   }))
   .catch(err=>dispatch({
     type: ADMIN_USER_GET_FAILURE,
-    payload: error
+    payload: err.responseJSON
   }))
 }
 
@@ -56,8 +56,8 @@ const addUser = data => dispatch =>{
     payload: res.data
   }))
   .catch(err=>dispatch({
-    type: ADMIN_USER_ADD_FAILURE,
-    payload: err
+  type: ADMIN_USER_ADD_FAILURE,
+  payload: err.response.data
   }))
 }
 
@@ -72,7 +72,7 @@ const updateUser = (user, data) => dispatch => {
   }))
   .catch(err=>dispatch({
     type: ADMIN_USER_UPDATE_FAILURE,
-    payload: err 
+    payload: err
   }))
 }
 

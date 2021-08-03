@@ -4,6 +4,7 @@ const initialState = {
   roles:{},
   role: {},
   loading: false,
+  errors: {}
 
 }
 const adminRoleReducer = (state=initialState, action)=>{

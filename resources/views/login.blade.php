@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Document</title>
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="login"></div>

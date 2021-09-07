@@ -1,7 +1,7 @@
 import React, {Component, } from 'react'
 import {render} from "react-dom"
 import './bootstrap'
-import {withRouter} from 'react-router-dom'
+// import {withRouter} from 'react-router-dom'
 import Auth from "./api/Auth"
 import Swal from 'sweetalert2'
 
@@ -158,7 +158,8 @@ class Login extends Component {
     }
 }
 
-export default withRouter(Login)
+// export default withRouter(Login)
+export default Login
 
 if (document.getElementById('login')){
     render(<Login/>, document.getElementById('login'))

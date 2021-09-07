@@ -82,4 +82,8 @@ class ArticleController extends Controller
     {
         //
     }
+
+    public function getPaginated(){
+      return Article::paginate();
+    }
 }

@@ -91,7 +91,12 @@ class Index extends Component {
                             </li>
                         </ul>
                     </li>
-
+                    <li className="sidebar-item">
+                      <Link className="sidebar-link" to={'/admin/content/category'}>
+                        <i className="fas fa-list"/>
+                        <span className="align-middle">Categories</span>
+                      </Link>
+                    </li>
                     <li className='sidebar-item'>
                         <a
                             className='sidebar-link'

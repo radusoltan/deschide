@@ -6,10 +6,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {
-  public function index(){}
+  public function index(){
+    return Permission::paginate();
+  }
   public function show(Permission $permission){
     return $permission;
   }
@@ -19,5 +22,11 @@ class PermissionController extends Controller
   public function update(Request $request, Permission $permission){}
   public function destroy(Permission $permission){
     return $permission->delete();
+  }
+  public function getAll(){
+    return Permission::all();
+  }
+  public function getAllByRole(Role $role){
+    return $role->permissions()->get();
   }
 }

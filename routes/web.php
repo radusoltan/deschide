@@ -3,13 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-
+Route::get('terms',);
 
 //Auth::routes();
 Route::get('login',function(){
     return view('login');
 })->name('login');
-
+Route::get('auth/facebook',[\App\Http\Controllers\SocialController::class, 'facebookRedirect']);
+Route::get('auth/facebook/callback',[\App\Http\Controllers\SocialController::class,'loginWithFacebook']);
 // Admin route
 Route::get('/admin/{path?}', function () {
     return view('admin');

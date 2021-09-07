@@ -12,7 +12,10 @@ class RoleController extends Controller
     }
 
     public function show(Role $role){
-      return $role;
+      return [
+        'role'=>$role,
+        'permissions' => $role->permissions()->get()
+      ];
     }
 
     public function store(Request $request)

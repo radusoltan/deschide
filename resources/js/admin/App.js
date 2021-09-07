@@ -9,11 +9,13 @@ import Users from './components/pages/management/users'
 import Permissions from './components/pages/management/permissions'
 import Roles from './components/pages/management/roles'
 import AddRole from './components/pages/management/roles/Add'
+import Role from './components/pages/management/roles/Role'
 import Sidebar from './components/partials/Sidebar'
 import Header from './components/partials/Header'
 import Footer from './components/partials/Footer'
 import AuthenticatedRoute from "./AuthenticatedRoute"
 import AddUser from './components/pages/management/users/Add'
+import Categories from './components/pages/content/category'
 
 class App extends Component {
     render() {
@@ -31,9 +33,11 @@ class App extends Component {
                                 <AuthenticatedRoute exact path={'/admin'} component={Dashboard} />
                                 <AuthenticatedRoute exact path={'/admin/management/roles'} component={Roles} />
                                 <AuthenticatedRoute exact path={'/admin/management/role/add'} component={AddRole} />
+                                <AuthenticatedRoute exact path={'/admin/management/role/:role'} component={Role} />
                                 <AuthenticatedRoute exact path={'/admin/management/users'} component={Users} />
                                 <AuthenticatedRoute exact path={'/admin/management/user/add'} component={AddUser} />
                                 <AuthenticatedRoute exact path={'/admin/management/permissions'} component={Permissions} />
+                                <AuthenticatedRoute exact path={'/admin/content/category'} component={Categories} />
                             </div>
                         </main>
                         <Footer />

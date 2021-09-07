@@ -52,6 +52,7 @@ class LoginController extends Controller
         }
         return $this->sendFailedLoginResponse($request);
     }
+
     public function checkAuth(Request $request){
         $user = Auth::guard('api')->user();
         if ($user){
@@ -61,7 +62,6 @@ class LoginController extends Controller
     }
     public function logout(Request $request){
         $user = Auth::guard('api')->user();
-
 
         if($user){
             $user->token()->revoke();

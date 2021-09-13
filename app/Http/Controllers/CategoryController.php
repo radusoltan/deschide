@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -10,11 +11,17 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Collection
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Category::paginate();
+      app()->setLocale($request->get('lang'));
+      try{
+        return Category::all();
+      } catch (\Exception $e){
+        throw new \Exception($e);
+      }
+
     }
 
     /**
@@ -81,5 +88,11 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+
+    public function getCategoryArticles(Category $category, Request $request)
+    {
+      app()->setLocale($request->get('lang'));
+      return $category->articles()->paginate();
     }
 }

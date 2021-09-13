@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('terms',);
+Route::get('import',[\App\Http\Controllers\ImportController::class,'getArticlesByLangAndSection']);
 
 //Auth::routes();
 Route::get('login',function(){

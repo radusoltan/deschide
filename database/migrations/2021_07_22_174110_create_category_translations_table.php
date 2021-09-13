@@ -21,7 +21,7 @@ class CreateCategoryTranslationsTable extends Migration
             $table->string('slug');
 
             $table->unique(['category_id','locale']);
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

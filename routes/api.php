@@ -49,5 +49,6 @@ Route::group(['middleware'=>["auth:api"]], function (){
 
   Route::group(['prefix'=>'category','as'=>'category.'], function (){
     Route::get('',[CategoryController::class,'index'])->name('list');
+    Route::get('{category}/articles',[CategoryController::class,'getCategoryArticles'])->name('articles.list');
   });
 });

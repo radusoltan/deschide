@@ -1,5 +1,7 @@
 import React, {Component, } from 'react'
 import {render} from "react-dom"
+import Cookies from "universal-cookie/lib"
+import i18next from "i18next"
 import './bootstrap'
 // import {withRouter} from 'react-router-dom'
 import Auth from "./api/Auth"
@@ -72,6 +74,9 @@ class Login extends Component {
         })
     }
     handleLangChange(e){
+      // i18next.changeLanguage(e.target.value)
+
+      cookies.set('i18next',e.target.value)
         this.setState({
             lang: e.target.value
         })
@@ -94,10 +99,7 @@ class Login extends Component {
                             <div className="card">
                                 <div className="card-body">
                                     <div className="m-sm-4">
-                                        <div className="text-center">
-                                            <img src="img/avatars/avatar.jpg" alt="Charles Hall"
-                                                 className="img-fluid rounded-circle" width="132" height="132"/>
-                                        </div>
+
                                         <form
                                             onSubmit={this.handleSubmit}
                                         >

@@ -36,7 +36,7 @@ class Login extends Component {
         e.preventDefault()
 
         Auth.login({
-            username: this.state.username,
+            email: this.state.username,
             password: this.state.password,
         })
         .then(r=> {
@@ -74,12 +74,10 @@ class Login extends Component {
         })
     }
     handleLangChange(e){
-      // i18next.changeLanguage(e.target.value)
-
       cookies.set('i18next',e.target.value)
-        this.setState({
-            lang: e.target.value
-        })
+      this.setState({
+          lang: e.target.value
+      })
     }
     handleChecked(){
         this.setState({isChecked:!this.state.isChecked})
@@ -160,7 +158,6 @@ class Login extends Component {
     }
 }
 
-// export default withRouter(Login)
 export default Login
 
 if (document.getElementById('login')){

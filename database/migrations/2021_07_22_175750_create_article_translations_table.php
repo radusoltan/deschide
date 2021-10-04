@@ -21,7 +21,7 @@ class CreateArticleTranslationsTable extends Migration
             $table->string('locale')->index();
             $table->text('lead')->nullable();
             $table->longText('content');
-            $table->unique(['article_id','locale']);
+            $table->unique(['article_id','locale','slug']);
             $table->foreign('article_id')->references('id')->on('articles');
         });
     }

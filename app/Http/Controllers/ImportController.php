@@ -20,77 +20,53 @@ class ImportController extends Controller
   }
 
   public function getArticlesByLangAndSection(){
-
-    $categories = Category::all();
-    $languages = config('app.locales');
     app()->setLocale('ro');
-    dump(app()->getLocale());
+    $categories = Category::all();
+
     foreach ($categories as $category){
+//      dump($category->number);
+      $response = Http::get('https://deschide.md/api/sections/'.$category->number.'/ro/articles?items_per_page=20&page=5');
+      $section = $response->json();
+      if (isset($section['items']) && $section['id']===$category->number){
+        $articles = $section['items'];
 
-      if ($category->number > 0){
+        foreach ($articles as $item){
+          if($item['type'] === 'stiri') {
+            $article = Article::where('number',$item['number'])->first();
+            if(!$article){
+//              dump();
+              $article = $category->articles()->create([
+                'title' => $item['title'],
+                'slug' => Str::slug($item['title']),
+                'lead' => $item['fields']['lead'] ?? '',
+                'content' => $item['fields']['Continut'] ?? '',
+                'status' => $item['status'],
+                'number' => $item['number']
+              ]);
+            }
+            dump($article);
+          }
 
-        $articles = Http::get('https://deschide.md/api/sections/'.$category->number.'/'.app()->getLocale().'/articles?page=1660&items_per_page=10');
-        foreach ($articles->json() as $key=>$value){
-          dump($key);
-          dump($value);
         }
-      }
 
+      }
     }
 
-//    foreach ($languages as $langName => $locale){
-//      dump($langName);
-//      app()->setLocale($locale);
+
+//      app()->setLocale('ro');
 //      dump(app()->getLocale());
+//      foreach ($categories as $category){
+//        $response = Http::get('https://deschide.md/api/sections/'.$category->number.'/ro/articles?items_per_page=20');
 //
+//        $articles = $response->json();
 //
-//
-//    }
-//    app()->setLocale('ro');
-//    foreach ($categories as $category){
-//      if ($category->number > 0){
-//        $response = Http::get('https://deschide.md/api/articles?page=1&items_per_page=100&section='.$category->number.'&language=ro');
-//
-//        if (!empty($response->json()['items'])){
-////          foreach ($response->json()['items'] as $item){
-//////              dump($item);
-////            $category = Category::where('number',$item['section']['number'])->first();
-////            $article = Article::where('number',$item['number'])->first();
-////            dump($category->name);
-////            if(!$article){
-////              $newArticle = $category->articles()->create([
-////                'title' => $item['title'],
-////                'slug' => Str::slug($item['title']),
-////                'lead' => $item['fields']['lead'] ?? null,
-////                'content' => $item['fields']['Continut']??' ',
-////                'status' => $item['status'],
-////                'number' => $item['number']
-////              ]);
-////              dump($newArticle);
-////            } else {
-////              $locales = ['ru','en'];
-////              foreach ($locales as $locale){
-////                if(!$article->hasTranslation($locale)) {
-////                  $response = Http::get('https://deschide.md/api/articles/'.$article->number.'/'.$locale.'json');
-////                  dump($response->json());
-////
-////
-////
-////                }
-////
-////              }
-////
-//////              dump($response->json()['number']);
-//////              dump($article->number);
-////            }
-////
-////          }
+//        if(isset($articles['items'], $articles['pagination']['itemsCount'])){
+//          foreach ($articles['items'] as $item){
+//            $article = Article::where('number',$item['number'])->first();
+//            dump($article);
+//          }
 //        }
 //      }
-//    }
-
-
-
 
   }
 
@@ -99,22 +75,29 @@ class ImportController extends Controller
   }
 
   public function getSectionsFromApi(){
-    $response = Http::get('https://deschide.md/api/sections?items_per_page=16&language=en');
-    app()->setLocale('en');
-    dump(app()->getLocale());
-    foreach ($response->json()['items'] as $section){
-      dump($section['title']);
-      $category = Category::where('number',$section['number'])->first();
-//      $category = Category::create([
-//        'name' => $section['title'],
-//        'number' => $section['number'],
-//        'slug' => Str::slug($section['title']),
-//        'in_menu' => true
-//      ]);
-//
-      $category->name = $section['title'];
-      $category->slug = Str::slug($section['title']);
-      $category->save();
+    $languages = config('app.locales');
+    foreach ($languages as $langName=>$locale){
+      dump($langName.' => '.$locale);
+      app()->setLocale($locale);
+      $response = Http::get('https://deschide.md/api/sections?items_per_page=16&language='.$locale);
+      $apiSections = $response->json();
+      foreach ($apiSections['items'] as $item){
+        $category = Category::where('number',$item['number'])->first();
+        if (!$category){
+          $category = Category::create([
+            'name' => $item['title'],
+            'slug' => Str::slug($item['title']),
+            'number' => $item['number'],
+            'in_menu' => true
+          ]);
+        }
+//        dump($category);
+        if(!$category->hasTranslation($locale)) {
+          $category->name = $item['title'];
+          $category->slug = Str::slug($item['title']);
+          $category->save();
+        }
+      }
     }
   }
 }

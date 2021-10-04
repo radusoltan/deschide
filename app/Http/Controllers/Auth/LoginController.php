@@ -47,7 +47,7 @@ class LoginController extends Controller
             $token = $user->createToken('deschide')->accessToken;
             return response()->json([
                 'user'=>$user,
-                'token'=>$token
+                'access_token'=>$token
             ]);
         }
         return $this->sendFailedLoginResponse($request);

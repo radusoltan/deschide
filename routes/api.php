@@ -8,8 +8,8 @@ use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Http\Controllers\AccessTokenController;
 
-Route::post('login',[AccessTokenController::class,'issueToken'])
-    ->middleware(['api-login','throttle'])
+Route::post('login',[LoginController::class,'login'])
+//    ->middleware(['api-login','throttle'])
     ->name('login');
 
 Route::get('languages',function (){

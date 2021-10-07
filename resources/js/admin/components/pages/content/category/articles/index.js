@@ -12,8 +12,8 @@ class Index extends Component {
   render() {
     const category = this.props.match.params.category
     const articles = this.props.articles.data ?
-      this.props.articles.data.map(article=><li className="list-group-item" key={article.id}>
-        <Link to={`/admin/content/${category}/${article.id}`} >{article.title}</Link>
+      this.props.articles.data.map(({id,title})=><li className="list-group-item" key={id}>
+        <Link to={`/admin/content/${category}/${id}`} >{title}</Link>
       </li>)
       : null
     return <Fragment>

@@ -17,6 +17,7 @@ import AuthenticatedRoute from "./AuthenticatedRoute"
 import AddUser from './components/pages/management/users/Add'
 import Categories from './components/pages/content/category'
 import CategoryArticles from './components/pages/content/category/articles'
+import Article from "./components/pages/content/category/articles/articleEdit";
 
 class App extends Component {
     render() {
@@ -40,6 +41,7 @@ class App extends Component {
                                 <AuthenticatedRoute exact path={'/admin/management/permissions'} component={Permissions} />
                                 <AuthenticatedRoute exact path={'/admin/content/category'} component={Categories} />
                                 <AuthenticatedRoute exact path={'/admin/content/:category/articles'} component={CategoryArticles} />
+                                <AuthenticatedRoute exact path={'/admin/content/:category/:article'} component={Article} />
                             </div>
                         </main>
                         <Footer />

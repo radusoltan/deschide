@@ -78425,7 +78425,7 @@ var Login = /*#__PURE__*/function (_Component) {
 
       e.preventDefault();
       _api_Auth__WEBPACK_IMPORTED_MODULE_4__.default.login({
-        username: this.state.username,
+        email: this.state.username,
         password: this.state.password
       }).then(function (r) {
         if (!_this2.state.isChecked) {
@@ -78468,7 +78468,6 @@ var Login = /*#__PURE__*/function (_Component) {
   }, {
     key: "handleLangChange",
     value: function handleLangChange(e) {
-      // i18next.changeLanguage(e.target.value)
       cookies.set('i18next', e.target.value);
       this.setState({
         lang: e.target.value
@@ -78593,8 +78592,7 @@ var Login = /*#__PURE__*/function (_Component) {
   }]);
 
   return Login;
-}(react__WEBPACK_IMPORTED_MODULE_0__.Component); // export default withRouter(Login)
-
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Login);
 

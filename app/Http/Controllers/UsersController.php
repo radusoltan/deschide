@@ -17,7 +17,10 @@ class UsersController extends Controller
     }
 
     public function show(User $user){
-      return $user;
+      return [
+        'user'=>$user,
+        'permissions' => $user->getAllPermissions()->pluck('name')
+      ];
     }
 
     public function store(Request $request){

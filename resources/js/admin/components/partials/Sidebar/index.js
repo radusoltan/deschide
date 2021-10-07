@@ -2,10 +2,12 @@ import React, {Component} from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import Auth from "../../../../api/Auth"
 import i18next from "i18next";
+import store from "../../../../store/store"
+import AccessControl from "../../../AccessControl"
 class Index extends Component {
     constructor(props) {
         super(props)
-
+        console.log(store.getState().adminApp.loggedUser)
         this.handleLogout = this.handleLogout.bind(this)
     }
 
@@ -44,7 +46,12 @@ class Index extends Component {
                 </Link>
 
                 <ul className="sidebar-nav">
-
+                    <AccessControl
+                      allowedPermissions={store.getState().adminApp.loggedUser.permissions}
+                      renderNoAccess={()=> <div className="alert alert-danger" role="alert">
+                        A simple danger alert—check it out!
+                      </div>}
+                    >
                     <li
                       className={
                         this.props.location.pathname === '/admin/management/users'
@@ -91,6 +98,7 @@ class Index extends Component {
                             </li>
                         </ul>
                     </li>
+                    </AccessControl>
                     <li className="sidebar-item">
                       <Link className="sidebar-link" to={'/admin/content/category'}>
                         <i className="fas fa-list"/>

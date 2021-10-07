@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+//Route::feeds();
+
 Route::get('import',[\App\Http\Controllers\ImportController::class,'getArticlesByLangAndSection']);
 
 //Auth::routes();

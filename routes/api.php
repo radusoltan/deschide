@@ -51,4 +51,14 @@ Route::group(['middleware'=>["auth:api"]], function (){
     Route::get('',[CategoryController::class,'index'])->name('list');
     Route::get('{category}/articles',[CategoryController::class,'getCategoryArticles'])->name('articles.list');
   });
+
+  Route::group(['prefix'=>'article','as'=>'article.'],function (){
+
+    Route::get('{article}',[\App\Http\Controllers\ArticleController::class,'show'])->name('get');
+    Route::patch('{article}/update',[\App\Http\Controllers\ArticleController::class,'update'])->name('update');
+    Route::delete('{article}/delete',[\App\Http\Controllers\ArticleController::class,'destroy'])->name('delete');
+    Route::post('',[\App\Http\Controllers\ArticleController::class,'store'])->name('store');
+
+  });
+
 });

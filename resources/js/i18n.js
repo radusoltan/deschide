@@ -2,13 +2,13 @@ import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import HttpApi from 'i18next-http-backend'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import gb from './locales/gb/en-GB.json'
-import ro from './locales/ro/ro-RO.json'
-import ru from './locales/ru/ru-RU.json'
+import en from './translations/en/admin.json'
+import ro from './translations/ro/admin.json'
+import ru from './translations/ru/admin.json'
 
 const resources = {
-    gb: {
-        translation: gb
+    en: {
+        translation: en
     },
     ro: {
         translation: ro
@@ -23,11 +23,11 @@ i18n
     .use(HttpApi)
     .init({
         resources,
-        // lng: 'ro',
-        supportedLngs: ['ro','gb','ru'],
+        lng: 'ro',
+        supportedLngs: ['ro','en','ru'],
         fallbackLng: 'ro',
         detection: {
-            order: ['cookie','localStorage','htmlTag', 'sessionStorage', 'path', 'subdomain'],
+            order: ['htmlTag', 'cookie','localStorage','sessionStorage', 'path', 'subdomain'],
             caches: ['cookie','localStorage']
         },
         interpolation: {

@@ -30,10 +30,4 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'facebook' => [
-        'client_id' => '2623055817792270',
-        'client_secret' => 'a2936bfefdaa3944b787f71a8939b1cf',
-        'redirect' => 'https://deschide.local/auth/facebook/callback'
-    ]
-
 ];

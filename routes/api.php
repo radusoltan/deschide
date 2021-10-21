@@ -2,63 +2,32 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Laravel\Passport\Http\Controllers\AccessTokenController;
 
-Route::post('login',[LoginController::class,'login'])
-//    ->middleware(['api-login','throttle'])
-    ->name('login');
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+Route::post('login',[LoginController::class,'login']);
 
-Route::get('languages',function (){
-  return config('app.languages');
-});
-
-Route::group(['middleware'=>["auth:api"]], function (){
-  Route::get('check-auth',[LoginController::class,'checkAuth']);
-
-  Route::post('logout',[LoginController::class,'logout']);
-
-  Route::group(['prefix'=>'user','as'=>'user.'], function (){
-    Route::get('',[UsersController::class,'index'])->name('index');
-    Route::get('{user}',[UsersController::class,'show'])->name('show');
-    Route::post('add',[UsersController::class,'store'])->name('store');
-    Route::patch('{user}',[UsersController::class,'update'])->name('update');
-    Route::delete('{user}',[UsersController::class,'destroy'])->name('destroy');
-  });
-
-  Route::group(['prefix'=>'role','as'=>'role.'], function(){
-    Route::get('',[RoleController::class,'index'])->name('index');
-    Route::get('{role}',[RoleController::class,'show'])->name('show');
-    Route::post('',[RoleController::class,'store'])->name('store');
-    Route::patch('{role}',[RoleController::class,'update'])->name('update');
-    Route::delete('{role}',[RoleController::class,'destroy'])->name('destroy');
-  });
-
-  Route::group(['prefix'=>'permission','as'=>'permission.'], function(){
-    Route::get('',[PermissionController::class,'index'])->name('index');
-    Route::get('all',[PermissionController::class,'getAll'])->name('all');
-    Route::get('by-role/{role}',[PermissionController::class,'getAllByRole']);
-    Route::get('{permission}',[PermissionController::class,'show'])->name('show');
-    Route::post('',[PermissionController::class,'store'])->name('store');
-    Route::patch('{role}',[PermissionController::class,'update'])->name('update');
-    Route::delete('{role}',[PermissionController::class,'destroy'])->name('destroy');
-  });
-
-  Route::group(['prefix'=>'category','as'=>'category.'], function (){
-    Route::get('',[CategoryController::class,'index'])->name('list');
-    Route::get('{category}/articles',[CategoryController::class,'getCategoryArticles'])->name('articles.list');
-  });
-
-  Route::group(['prefix'=>'article','as'=>'article.'],function (){
-
-    Route::get('{article}',[\App\Http\Controllers\ArticleController::class,'show'])->name('get');
-    Route::patch('{article}/update',[\App\Http\Controllers\ArticleController::class,'update'])->name('update');
-    Route::delete('{article}/delete',[\App\Http\Controllers\ArticleController::class,'destroy'])->name('delete');
-    Route::post('',[\App\Http\Controllers\ArticleController::class,'store'])->name('store');
-
-  });
-
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+Route::group(['middleware'=> ['auth:api']], function (){
+    Route::post('logout',[LoginController::class,'logout']);
+    Route::get('loggedUser',[UserController::class,'getLoggedUser']);
+    Route::group(['prefix'=>'user','as'=>'user.'], function (){
+        Route::get('',[UserController::class,'getUserById']);
+    });
+    Route::group(['prefix'=>'{locale}/category', 'as'=>'category.'],function(){
+        Route::get('', [CategoryController::class,'index']);
+    });
 });

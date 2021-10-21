@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::ADMIN;
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -37,36 +37,30 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout','checkAuth');
+        $this->middleware('guest')->except('logout');
     }
 
     public function login(Request $request){
         $this->validateLogin($request);
         if ($this->attemptLogin($request)){
             $user = $this->guard()->user();
-            $token = $user->createToken('deschide')->accessToken;
+
             return response()->json([
-                'user'=>$user,
-                'access_token'=>$token
-            ]);
+                'user'=>$user->id,
+                'token' => $user->createToken('deschide')->accessToken
+            ],200);
+
         }
         return $this->sendFailedLoginResponse($request);
     }
 
-    public function checkAuth(Request $request){
-        $user = Auth::guard('api')->user();
-        if ($user){
-            return response()->json(['state'=>1],200);
-        }
-        return response()->json(['state'=>0],401);
-    }
     public function logout(Request $request){
+//        dd($request);
         $user = Auth::guard('api')->user();
-
-        if($user){
+        if($user) {
             $user->token()->revoke();
             return response()->json([
-                'data'=>'User logged out.',
+                'data' => 'User logged out.'
             ],200);
         }
         return response()->json(['state' => 0, 'message' => 'Unauthenticated'],401);

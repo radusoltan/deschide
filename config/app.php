@@ -1,7 +1,5 @@
 <?php
 
-use Laravel\Socialite\Facades\Socialite;
-
 return [
 
     /*
@@ -82,11 +80,11 @@ return [
     |
     */
 
-    'locale' => 'en',
-    'locales'=>[
-      'Romanian'=>'ro',
-      'Russian'=>'ru',
-      'English'=>'en'
+    'locale' => 'ro',
+    'locales' => [
+        'ro'=>'Romana',
+        'en'=>'English',
+        'ru'=>'Русский',
     ],
 
     /*
@@ -100,7 +98,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ro',
 
     /*
     |--------------------------------------------------------------------------
@@ -168,11 +166,11 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Spatie\Permission\PermissionServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
-        \Laravel\Socialite\SocialiteServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -235,7 +233,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Socialite' => Socialite::class,
 
     ],
 

@@ -5,29 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Collection
+     * @return Category[]|Collection
      */
-    public function index(Request $request)
+    public function index($locale, Request $request)
     {
-      app()->setLocale($request->get('lang'));
-      try{
+        app()->setLocale($locale);
+//        dd($request);
         return Category::all();
-      } catch (\Exception $e){
-        throw new \Exception($e);
-      }
-
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -38,7 +35,7 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -48,19 +45,19 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return Category
      */
     public function show(Category $category)
     {
-        //
+        return $category;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return Response
      */
     public function edit(Category $category)
     {
@@ -71,8 +68,8 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return Response
      */
     public function update(Request $request, Category $category)
     {
@@ -82,17 +79,11 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return bool
      */
     public function destroy(Category $category)
     {
-        //
-    }
-
-    public function getCategoryArticles(Category $category, Request $request)
-    {
-      app()->setLocale($request->get('lang'));
-      return $category->articles()->paginate();
+        return $category->delete();
     }
 }

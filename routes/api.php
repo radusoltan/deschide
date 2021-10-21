@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,5 +26,8 @@ Route::group(['middleware'=> ['auth:api']], function (){
     Route::get('loggedUser',[UserController::class,'getLoggedUser']);
     Route::group(['prefix'=>'user','as'=>'user.'], function (){
         Route::get('',[UserController::class,'getUserById']);
+    });
+    Route::group(['prefix'=>'{locale}/category', 'as'=>'category.'],function(){
+        Route::get('', [CategoryController::class,'index']);
     });
 });

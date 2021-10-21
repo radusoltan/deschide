@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import {authUser, userSelector, clearState} from '../slices/AuthSlice'
 import {toast} from "react-hot-toast";
 const Login = ()=>{
-    // const em = ''
     const dispatch = useDispatch()
     const history = useHistory()
 

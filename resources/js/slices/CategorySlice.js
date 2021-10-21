@@ -8,14 +8,14 @@ const headers = {
 
 const createRequest = (url) =>({url,headers})
 
-export const categoryApi = createApi({
-    reducerPath: "categoryApi",
-    baseQuery: fetchBaseQuery({baseUrl}),
-    endpoints: (builder)=>({
-        getAllCategories: builder.query({
-            query: (lng)=>createRequest(`${lng}/category`)
-        })
-    })
-})
-
-export const {useGetAllCategoriesQuery} = categoryApi
+// export const categoryApi = createApi({
+//     reducerPath: "categoryApi",
+//     baseQuery: fetchBaseQuery({baseUrl}),
+//     endpoints: (builder)=>({
+//         getAllCategories: builder.query({
+//             query: (lng)=>createRequest(`${lng}/category`)
+//         })
+//     })
+// })
+//
+// export const {useGetAllCategoriesQuery} = categoryApi

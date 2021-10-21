@@ -15,15 +15,15 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id');
-            $table->boolean('is_flash')->default(false);
-            $table->boolean('is_alert')->default(false);
-            $table->boolean('is_breaking')->default(false);
-            $table->string('status');
-            $table->timestamp('published_at')->nullable(true);
-            $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->unsignedBigInteger('category_id');
+            $table->string('status')->default('N');
+            $table->boolean('is_breaking')->default(false);
+            $table->boolean('is_alert')->default(false);
+            $table->boolean('is_flash')->default(false);
+
+            $table->foreign('category_id')->on('categories')->references('id');
+            $table->timestamps();
         });
     }
 

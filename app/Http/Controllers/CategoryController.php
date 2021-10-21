@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Category;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,10 +16,9 @@ class CategoryController extends Controller
      *
      * @return Category[]|Collection
      */
-    public function index($locale, Request $request)
+    public function index($locale)
     {
         app()->setLocale($locale);
-//        dd($request);
         return Category::all();
     }
 
@@ -85,5 +86,17 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         return $category->delete();
+    }
+
+    /**
+     * Get articles with specific Category
+     *
+     * @param $lang
+     * @param Category $category
+     * @return LengthAwarePaginator
+     */
+    public function getArticles($lang,Category $category){
+        app()->setLocale($lang);
+        return $category->articles()->paginate();
     }
 }

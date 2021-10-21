@@ -1,7 +1,15 @@
 import React from 'react'
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {useGetCategoryArticlesQuery} from "../../../services/Category"
+import i18n from "i18next";
 
 const CategoryArticlesList = ()=>{
+    const {category} = useParams()
+    const lng = i18n.language
+    console.log(category)
+    const {data, error, isLoading} = useGetCategoryArticlesQuery({lng, category})
+    // console.log(data)
+    // console.log(isLoading)
 
     return <>
         <nav aria-label="breadcrumb">

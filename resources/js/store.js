@@ -14,6 +14,10 @@ export const store = configureStore({
             serializableCheck:{
                 ignoredActions: ['user/logout/rejected']
             }
-        }).concat(userApi.middleware)
+        }).concat([
+            userApi.middleware,
+            categoryApi.middleware
+        ])
+
 })
 setupListeners(store.dispatch)

@@ -17,10 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('login',[LoginController::class,'login']);
-
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
 Route::group(['middleware'=> ['auth:api']], function (){
     Route::post('logout',[LoginController::class,'logout']);
     Route::get('loggedUser',[UserController::class,'getLoggedUser']);
@@ -29,5 +25,9 @@ Route::group(['middleware'=> ['auth:api']], function (){
     });
     Route::group(['prefix'=>'{locale}/category', 'as'=>'category.'],function(){
         Route::get('', [CategoryController::class,'index']);
+        Route::get('{category}/articles',[CategoryController::class,'getArticles']);
+    });
+    Route::group(['prefix'=>'{locale}/article', 'as'=>'article.'], function (){
+        Route::get('', [\App\Http\Controllers\ArticleController::class,'index']);
     });
 });

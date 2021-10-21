@@ -16,13 +16,14 @@ class CreateArticleTranslationsTable extends Migration
         Schema::create('article_translations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('article_id');
+            $table->string('locale')->index();
             $table->string('title');
             $table->string('slug');
-            $table->string('locale')->index();
-            $table->text('lead')->nullable();
+            $table->text('lead')->nullable(true);
             $table->longText('content');
-            $table->unique(['article_id','locale','slug']);
-            $table->foreign('article_id')->references('id')->on('articles');
+
+            $table->unique(['article_id','locale', 'slug']);
+            $table->foreign('article_id')->on('articles')->references('id');
         });
     }
 

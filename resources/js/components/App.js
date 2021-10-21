@@ -15,7 +15,6 @@ import Login from "./Login"
 function App() {
 
     return <Provider store={store}>
-
         <Router>
             <ul>
                 <li>

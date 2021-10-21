@@ -39,7 +39,7 @@ const Category = ()=>{
                                 </div>
                             ) : (
                                 data.map(({id,name})=>(<li className="list-group-item" key={id}>
-                                    <Link to={`/admin/content/category/${id}`}>{name}</Link>
+                                    <Link to={`/admin/content/category/${id}/articles`}>{name}</Link>
                                     <a href="#" onClick={handleEdit(id)}>
                                         <i className="fas fa-edit"/>
                                     </a>

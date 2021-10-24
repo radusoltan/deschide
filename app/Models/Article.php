@@ -5,20 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
-use Spatie\Feed\Feedable;
-use Spatie\Feed\FeedItem;
+//use Spatie\Feed\Feedable;
+//use Spatie\Feed\FeedItem;
 
 class Article extends Model implements TranslatableContract//, Feedable
 {
     use Translatable;
 
   public $translatedAttributes = ['title','slug','lead', 'content'];
-  protected $fillable = ['status','number'];
+  protected $fillable = ['status','number','category_id','is_breaking','is_alert','is_flash'];
 
     public function category(){
       return $this->belongsTo(Category::class);
     }
-
+  protected $casts = [
+    'is_breaking' => 'boolean',
+    'is_alert' => 'boolean',
+    'is_flash' => 'boolean',
+  ];
 //  /**
 //   * @return FeedItem
 //   */

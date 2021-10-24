@@ -13,7 +13,7 @@ export const authUser = createAsyncThunk(
     'user/login',
     async({email,password}, thunkAPI) =>{
         try {
-            const response = await axios.post('http://deschide.local/api/login',{email, password})
+            const response = await axios.post('login',{email, password})
 
             console.log('authUser response', response)
 
@@ -33,7 +33,7 @@ export const authUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk('user/logout',
     async ({},thunkAPI) =>{
         try {
-            const response = await axios.post('http://deschide.local/api/logout',{},{
+            const response = await axios.post('logout',{},{
                 headers: {
                     Authorization: 'Bearer '+ localStorage.getItem('token')
                 }

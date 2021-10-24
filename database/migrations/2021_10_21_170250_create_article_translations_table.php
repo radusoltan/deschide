@@ -23,7 +23,7 @@ class CreateArticleTranslationsTable extends Migration
             $table->longText('content');
 
             $table->unique(['article_id','locale', 'slug']);
-            $table->foreign('article_id')->on('articles')->references('id');
+            $table->foreign('article_id')->on('articles')->references('id')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

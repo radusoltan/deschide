@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Deschide.MD'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://deschide.local'),
 
     'asset_url' => env('ASSET_URL', null),
 

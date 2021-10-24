@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('test',function (){
+   dump(request());
+});
 Route::post('login',[LoginController::class,'login']);
 Route::group(['middleware'=> ['auth:api']], function (){
     Route::post('logout',[LoginController::class,'logout']);
@@ -26,8 +30,16 @@ Route::group(['middleware'=> ['auth:api']], function (){
     Route::group(['prefix'=>'{locale}/category', 'as'=>'category.'],function(){
         Route::get('', [CategoryController::class,'index']);
         Route::get('{category}/articles',[CategoryController::class,'getArticles']);
+        Route::get('{category}',[CategoryController::class,'show']);
+
+        Route::post('add',[CategoryController::class,'store']);
+        Route::post('{category}/add-article',[CategoryController::class,'addArticle']);
+        Route::patch('{category}/update', [CategoryController::class,'update']);
+        Route::delete('{category}/delete',[CategoryController::class,'destroy']);
     });
     Route::group(['prefix'=>'{locale}/article', 'as'=>'article.'], function (){
-        Route::get('', [\App\Http\Controllers\ArticleController::class,'index']);
+        Route::get('', [ArticleController::class,'index']);
+        Route::get('{article}',[ArticleController::class,'show']);
+        Route::patch('{article}/update',[ArticleController::class,'update']);
     });
 });

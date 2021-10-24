@@ -12,7 +12,13 @@ class Category extends Model implements TranslatableContract
     public $translatedAttributes = ['name', 'slug'];
     protected $fillable = ['in_menu'];
 
+    protected $casts = [
+
+      'in_menu' => 'boolean'
+
+    ];
+
     public function articles(){
-        return $this->belongsTo(Article::class);
+        return $this->hasMany(Article::class);
     }
 }

@@ -23,11 +23,11 @@ i18n
     .use(HttpApi)
     .init({
         resources,
-        lng: 'ro',
+        // lng: 'ro',
         supportedLngs: ['ro','en','ru'],
         fallbackLng: 'ro',
         detection: {
-            order: ['htmlTag', 'cookie','localStorage','sessionStorage', 'path', 'subdomain'],
+            order: ['cookie','localStorage','htmlTag','sessionStorage', 'path', 'subdomain'],
             caches: ['cookie','localStorage']
         },
         interpolation: {

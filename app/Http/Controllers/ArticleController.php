@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Psy\Util\Str;
 
 class ArticleController extends Controller
 {
@@ -45,10 +46,10 @@ class ArticleController extends Controller
      * @param Article $article
      * @return Article
      */
-    public function show(Article $article)
+    public function show($locale,Article $article)
     {
-        $article->vzt()->increment();
-        app()->setLocale(request('lang'));
+//        $article->vzt()->increment();
+        app()->setLocale($locale);
         return $article;
     }
 
@@ -68,11 +69,21 @@ class ArticleController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param Article $article
-     * @return \Illuminate\Http\Response
+     * @return bool
      */
-    public function update(Request $request, Article $article)
+    public function update($locale,Request $request, Article $article)
     {
-        //
+        app()->setLocale($locale);
+//        dump($request->all());
+        return $article->update([
+          'title' => $request->get('title'),
+          'slug' => \Illuminate\Support\Str::slug($request->get('title')),
+          'lead' => $request->get('lead'),
+          'content' => $request->get('content'),
+          'is_breaking' => $request->get('is_breaking'),
+          'is_flash' => $request->get('is_flash'),
+          'is_alert' => $request->get('is_alert'),
+        ]);
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -45,20 +46,24 @@ class LoginController extends Controller
         if ($this->attemptLogin($request)){
             $user = $this->guard()->user();
 
+			Log::info('User ('.$user->name.') is logged in');
+			$user->logged_in = true;
+			$user->save();
             return response()->json([
-                'user'=>$user->id,
                 'token' => $user->createToken('deschide')->accessToken
             ],200);
-
         }
         return $this->sendFailedLoginResponse($request);
     }
 
     public function logout(Request $request){
-//        dd($request);
         $user = Auth::guard('api')->user();
         if($user) {
             $user->token()->revoke();
+	        $user->logged_in = false;
+			$user->save();
+	        Log::info('User ('.$user->name.') is logged out');
+
             return response()->json([
                 'data' => 'User logged out.'
             ],200);

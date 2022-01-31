@@ -27,10 +27,12 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "@ant-design/icons": "^4.7.0",
         "@fortawesome/fontawesome-free": "^5.15.4",
         "@hookform/resolvers": "^2.8.2",
         "@popperjs/core": "^2.10.2",
         "@reduxjs/toolkit": "^1.6.2",
+        "antd": "^4.16.13",
         "dotenv": "^10.0.0",
         "feather-icons": "^4.28.0",
         "i18next": "^21.3.2",

@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 class PermissionController extends Controller
 {
   public function index(){
-    return Permission::paginate();
+    return Permission::all()->pluck('name');
   }
   public function show(Permission $permission){
     return $permission;

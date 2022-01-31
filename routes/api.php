@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,9 +26,19 @@ Route::group(['middleware'=> ['auth:api']], function (){
     Route::post('logout',[LoginController::class,'logout']);
     Route::get('loggedUser',[UserController::class,'getLoggedUser']);
     Route::group(['prefix'=>'user','as'=>'user.'], function (){
-        Route::get('',[UserController::class,'getUserById']);
+        Route::get('',[UserController::class,'index']);
+		Route::get('{user}',[UserController::class,'getUserById']);
     });
-    Route::group(['prefix'=>'{locale}/category', 'as'=>'category.'],function(){
+
+	Route::group(['prefix'=>'permission','as'=>'permission.'], function(){
+		Route::get('',[PermissionController::class,'index']);
+	});
+
+	Route::group(['prefix'=>'role','as'=>'role.'], function(){
+		Route::get('',[\App\Http\Controllers\RoleController::class, 'index']);
+	});
+
+    Route::group(['prefix'=>'/category', 'as'=>'category.'],function(){
         Route::get('', [CategoryController::class,'index']);
         Route::get('{category}/articles',[CategoryController::class,'getArticles']);
         Route::get('{category}',[CategoryController::class,'show']);

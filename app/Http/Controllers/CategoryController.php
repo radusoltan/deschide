@@ -6,8 +6,10 @@ use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -17,10 +19,11 @@ class CategoryController extends Controller
      *
      * @return Category[]|Collection
      */
-    public function index($locale)
+    public function index()
     {
-        app()->setLocale($locale);
-        return Category::all();
+
+//		Log::info(auth()->user()->name.' request all Categories');
+		return Category::paginate();
     }
 
     /**
@@ -55,16 +58,21 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $locale
      * @param Category $category
-     * @return Category
+     * @return JsonResponse
      */
-    public function show($locale,Category $category)
+    public function show(Category $category): JsonResponse
     {
-//        dd($lng);
-        app()->setLocale($locale);
-        return $category;
+//        app()->setLocale(request()->get('lng'));
+        return response()->json([
+			'category' => $category,
+	        'articles' => $category->articles()->get()
+        ]);
     }
+
+	public function getCategory(Category $category){
+		dump($category);
+	}
 
     /**
      * Show the form for editing the specified resource.
@@ -82,7 +90,7 @@ class CategoryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param Category $category
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function update($locale,Request $request, Category $category)
     {
@@ -122,12 +130,10 @@ class CategoryController extends Controller
     /**
      * Get articles with specific Category
      *
-     * @param $lang
      * @param Category $category
      * @return LengthAwarePaginator
      */
-    public function getArticles($lang,Category $category){
-        app()->setLocale($lang);
+    public function getArticles(Category $category){
         return $category->articles()->paginate();
     }
 
